@@ -1,0 +1,4 @@
+interface:
+  display_name: "X Link to PDF"
+  short_description: "Export public X articles with images and selectable text"
+  default_prompt: "Use $x-link-to-pdf to export this X link as a PDF with images and code blocks."

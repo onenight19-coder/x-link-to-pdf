@@ -1,0 +1,5 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const {statusId,parseTweet}=require('../scripts/x-link.js');
+test('accept share URL, reject untrusted hosts',()=>{assert.equal(statusId('https://x.com/example/status/123?s=46'),'123');for(const u of ['http://x.com/a/status/123','https://x.com.evil.test/a/status/123','https://x.com/home'])assert.throws(()=>statusId(u));});
+test('refuse article preview',()=>assert.throws(()=>parseTweet({code:200,tweet:{article:{title:'Preview'}}})));
+test('preserve code, ordered media and title',()=>{const d=parseTweet({code:200,tweet:{url:'https://x.com/test/status/123',article:{title:'中文 Demo',content:{blocks:[{type:'unstyled',text:'Hello 世界'},{type:'atomic',entityRanges:[{key:1}]}],entityMap:[{key:1,value:{type:'MARKDOWN',data:{markdown:'```js\nconst x = 1;\n```'}}}]}}}});assert.equal(d.title,'中文 Demo');assert.equal(d.blocks.at(-1).text,'const x = 1;');});
+test('refuse unknown atomic content',()=>assert.throws(()=>parseTweet({code:200,tweet:{article:{content:{blocks:[{type:'unstyled',text:'Body'},{type:'atomic',entityRanges:[{key:1}]}],entityMap:{1:{type:'UNKNOWN'}}}}}})));
