@@ -1,4 +1,4 @@
-# X Link to PDF
+# X Link to PDF （X长文链接转PDF）
 
 输入一个 X/Twitter 帖子链接，生成可选中文字的 PDF，保留文章图片、标题和代码块。无需上传 HTML，也无需 X API Key。
 
